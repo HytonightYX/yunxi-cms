@@ -1,0 +1,5 @@
+node_modules/
+logs/
+*.lock
+.idea/
+yarn-error.log
