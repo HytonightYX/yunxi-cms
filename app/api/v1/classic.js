@@ -9,8 +9,8 @@ router.get('/v1/classic/test', (ctx, next) => {
 router.post('/v1/classic/error', (ctx, next) => {
 	// ctx.body = {test: 'v1 classic router ok'}
 	const query = ctx.request.query
-
-	if (!query) {
+	abc
+	if (true) {
 		throw new ParameterException()
 	}
 	ctx.body = {text: 'no error'}
