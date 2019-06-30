@@ -1,6 +1,9 @@
 const Koa = require('koa')
 const InitManager = require('./core/init')
 const app = new Koa()
+const catchError = require('./middlewares/exception')
+
+app.use(catchError)
 
 InitManager.initCore(app)
 
