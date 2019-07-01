@@ -14,7 +14,6 @@ const catchError = async (ctx, next) => {
 			ctx.status = error.code
 			console.log(ctx)
 		} else {
-
 			ctx.body = {
 				message: '捕获到未知异常',
 				error_code: 999,

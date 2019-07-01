@@ -9,6 +9,8 @@ class InitManager {
 	static initCore(app) {
 		InitManager.app = app
 		InitManager.initLoadRouters()
+		// InitManager.loadHttpException()
+		InitManager.loadConfig()
 	}
 
 	static initLoadRouters() {
@@ -22,6 +24,13 @@ class InitManager {
 				InitManager.app.use(mod.routes())
 			}
 		}
+	}
+
+	// static loadHttpException
+
+	static loadConfig(path='') {
+		const configPath = path || process.cwd() + '/config/config.js'
+		global.config = require(configPath)
 	}
 }
 
