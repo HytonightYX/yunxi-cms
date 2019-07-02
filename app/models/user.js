@@ -1,5 +1,6 @@
 const {db} = require('../../core/db')
 const {Sequelize, Model} = require('sequelize')
+const bcryptjs = require('bcryptjs')
 
 class User extends Model {
 
@@ -16,7 +17,15 @@ User.init({
 		type: Sequelize.STRING, // 最大长度
 		unique: true,               // 唯一
 	},
-	password: Sequelize.STRING,
+	password: {
+		// 观察者模式
+		type: Sequelize.STRING,
+		set(val) {
+			const salt = bcryptjs.genSaltSync(10) // 10 表示生成盐的成本,越高越安全
+			const hashPassword = bcryptjs.hashSync(val, salt)
+			this.setDataValue('password', hashPassword) // this 代表User类
+		}
+	},
 	openid: {
 		type: Sequelize.STRING(64), // 最大长度
 		unique: true,               // 唯一
