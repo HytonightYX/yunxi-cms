@@ -9,7 +9,7 @@ class InitManager {
 	static initCore(app) {
 		InitManager.app = app
 		InitManager.initLoadRouters()
-		// InitManager.loadHttpException()
+		InitManager.loadHttpException()
 		InitManager.loadConfig()
 	}
 
@@ -24,6 +24,10 @@ class InitManager {
 				InitManager.app.use(mod.routes())
 			}
 		}
+	}
+
+	static loadHttpException(){
+		global.errs = require('./httpException')
 	}
 
 	// static loadHttpException
