@@ -18,7 +18,7 @@ const db = new Sequelize(dbName, user, pwd, {
 
 // 将模型
 db.sync({
-	force: false
+	force: true
 })
 
 module.exports = {db}

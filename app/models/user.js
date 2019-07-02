@@ -11,7 +11,7 @@ User.init({
 		primaryKey: true,
 		autoIncrement: true
 	},
-	nickname: Sequelize.STRING,
+	nickname: Sequelize.STRING(32),
 	email: {
 		type: Sequelize.STRING, // 最大长度
 		unique: true,               // 唯一
@@ -25,3 +25,5 @@ User.init({
 	sequelize: db,
 	tableName: 'user'
 })
+
+module.exports = {User}

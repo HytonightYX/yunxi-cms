@@ -7,12 +7,12 @@ router.get('/v1/classic/test', (ctx, next) => {
 	ctx.body = {test: 'v1 classic router ok'}
 })
 
-router.post('/v1/classic/:id/error/', (ctx, next) => {
+router.post('/v1/classic/:id/error/', async (ctx, next) => {
 	// ctx.body = {test: 'v1 classic router ok'}
 
 	const params = ctx.params
 	console.log(params.id)
-	const v = new PositiveIntegerValidator().validate(ctx)
+	const v = await new PositiveIntegerValidator().validate(ctx)
 	v.get('path.id', )
 
 
