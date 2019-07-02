@@ -12,7 +12,10 @@ User.init({
 		autoIncrement: true
 	},
 	nickname: Sequelize.STRING,
-	email: Sequelize.STRING,
+	email: {
+		type: Sequelize.STRING, // 最大长度
+		unique: true,               // 唯一
+	},
 	password: Sequelize.STRING,
 	openid: {
 		type: Sequelize.STRING(64), // 最大长度
