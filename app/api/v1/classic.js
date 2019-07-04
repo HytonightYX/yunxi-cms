@@ -1,21 +1,14 @@
 const Router = require('koa-router')
-const router = new Router()
-const {HttpException, ParameterException} = require('../../../core/httpException')
+const router = new Router({prefix: '/v1/classic'})
 const {PositiveIntegerValidator} = require('../../validators/validator')
+const {Auth} = require('../../../middlewares/auth')
 
-router.get('/v1/classic/test', (ctx, next) => {
+router.get('/test', (ctx, next) => {
 	ctx.body = {test: 'v1 classic router ok'}
 })
 
-router.post('/v1/classic/:id/error/', async (ctx, next) => {
-	// ctx.body = {test: 'v1 classic router ok'}
-
-	const params = ctx.params
-	console.log(params.id)
-	const v = await new PositiveIntegerValidator().validate(ctx)
-	v.get('path.id', )
-
-
+router.get('/latest', new Auth().m, async (ctx, next) => {
+	ctx.body = ctx.auth.uid
 })
 
 module.exports = router

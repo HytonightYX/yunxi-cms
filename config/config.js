@@ -10,6 +10,6 @@ module.exports = {
 	},
 	security: {
 		secretKey: "abcdefg",        // 秘钥
-		expiresIn: 60 * 60,   // 令牌过期时间 一小时
+		expiresIn: 60 * 60 * 24 * 30,   // 令牌过期时间 一个月
 	}
 }
