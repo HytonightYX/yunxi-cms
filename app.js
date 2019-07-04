@@ -11,7 +11,7 @@ app.use(catchError)
 InitManager.initCore(app)
 
 if (global.config.env === 'dev') {
-	console.log('dev')
+	console.log('current env: dev')
 }
 
 app.listen(3030, () => {console.log('PORT has opened on 3030')})

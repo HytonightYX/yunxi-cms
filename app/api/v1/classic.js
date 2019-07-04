@@ -7,7 +7,7 @@ router.get('/test', (ctx, next) => {
 	ctx.body = {test: 'v1 classic router ok'}
 })
 
-router.get('/latest', new Auth().m, async (ctx, next) => {
+router.get('/latest', new Auth(7).m, async (ctx, next) => {
 	ctx.body = ctx.auth.uid
 })
 

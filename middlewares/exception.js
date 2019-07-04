@@ -13,7 +13,6 @@ const catchError = async (ctx, next) => {
 		}
 
 		if (error instanceof HttpException) {
-			console.log(error)
 			ctx.body = {
 				message: error.message,
 				error_code: error.errorCode,

@@ -4,6 +4,7 @@ const {LoginType} = require('../../lib/enum')
 const {User} = require('../../models/user')
 const router = new Router({prefix: '/v1/token'})
 const {generateToken} = require('../../../core/util')
+const {Auth} = require('../../../middlewares/auth')
 
 /**
  * 校验令牌
@@ -19,6 +20,7 @@ router.post('/', async (ctx) => {
 			token = await emailLogin(v.get('body.account'), v.get('body.secret'))
 			break
 		case LoginType.USER_MINI_PROGRAM:
+
 			break
 
 		default:
@@ -38,7 +40,7 @@ router.post('/', async (ctx) => {
  */
 async function emailLogin(account, secret) {
 	const user = await User.verifyEmailPassword(account, secret)
-	return generateToken(user.id, 2)
+	return generateToken(user.id, Auth.USER) // Auth.USER = 8
 }
 
 module.exports = router

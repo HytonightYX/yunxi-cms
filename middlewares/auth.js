@@ -2,9 +2,12 @@ const basicAuth = require('basic-auth')
 const jwt = require('jsonwebtoken')
 
 class Auth {
-	constructor() {
+	constructor(level) {
+		this.level = level || 1
 
-
+		Auth.USER = 8
+		Auth.ADMIN = 16
+		Auth.SUPER_ADMIN = 32
 	}
 
 	get m() {
@@ -15,7 +18,7 @@ class Auth {
 			let msg = 'Token不合法'
 			let decode
 			const userToken = basicAuth(ctx.req)
-			// console.log('token = ' + token)
+
 			// ctx.body = {token}
 			// ctx.req => node.js 原生 request
 			// ctx.request => koa封装后的request
@@ -27,11 +30,17 @@ class Auth {
 
 			try {
 				decode = jwt.verify(userToken.name, global.config.security.secretKey)
+				console.log(decode)
 			} catch (error) {
 				// 令牌不合法或者令牌过期
 				if (error.name === 'TokenExpiredError') {
 					msg = 'Token已过期'
 				}
+				throw new global.errs.Forbidden(msg)
+			}
+
+			if (decode.scope < this.level) {
+				msg = '权限不足'
 				throw new global.errs.Forbidden(msg)
 			}
 

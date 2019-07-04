@@ -3,6 +3,7 @@ const router = new Router({prefix: '/v1/user'})
 const {User} = require('../../models/user')
 const {RegisterValidator} = require('../../validators/validator')
 const {success} = require('../../lib/helper')
+
 /**
  * 注册功能
  */
