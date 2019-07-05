@@ -10,8 +10,6 @@ const classicFields = {
 	type: Sequelize.TINYINT,
 }
 
-
-
 class Movie extends Model {
 
 }
