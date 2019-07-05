@@ -22,7 +22,7 @@ const catchError = async (ctx, next) => {
 			console.log(ctx)
 		} else {
 			ctx.body = {
-				message: '捕获到未知异常',
+				message: '捕获到未知异常:\n' + error.stack,
 				error_code: 999,
 				request: `${ctx.method} ${ctx.path}`,
 			}

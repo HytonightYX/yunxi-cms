@@ -17,12 +17,13 @@ class MXManager {
 
 		const res = await axios.get(url)
 		if (res.status !== 200) {
-			throw global.errs.AuthFailed('openid获取失败')
+			throw new global.errs.AuthFailed('openid获取失败')
 		}
 
 		const errcode = res.data.errcode
-		if (errcode !== 0) {
-			throw global.errs.AuthFailed(
+
+		if (errcode) {
+			throw new global.errs.AuthFailed(
 				'openid获取失败,错误码:' + errcode +
 				'\n详情参阅https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html'
 			)

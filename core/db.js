@@ -12,13 +12,13 @@ const db = new Sequelize(dbName, user, pwd, {
 			// createdAt: 'created_at',  // 更名为符合Mysql的命名规则
 			// updatedAt: 'updated_at',
 			// deletedAt: 'deleted_at',
-			underscored: true         //  自动将驼峰转下划线
+			underscored: true,          //  自动将驼峰转下划线
 		}
 })
 
-// 将模型
+
 db.sync({
-	force: false
+	force: true
 })
 
 module.exports = {db}
