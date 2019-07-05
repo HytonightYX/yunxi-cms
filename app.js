@@ -4,6 +4,7 @@ const bodyParser = require('koa-bodyparser');
 const app = new Koa()
 const catchError = require('./middlewares/exception')
 require('./app/models/user')
+require('./app/models/classic')
 
 app.use(bodyParser());
 app.use(catchError)
