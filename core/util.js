@@ -38,7 +38,7 @@ const findMembers = function (instance, {
 }
 
 /**
- *
+ * 根据参数生成Token
  * @param uid 用户id
  * @param scope 权限
  * @returns token 令牌
