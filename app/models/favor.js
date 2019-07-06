@@ -44,6 +44,13 @@ class Favor extends Model {
 		})
 	}
 
+	/**
+	 * 取消点赞
+	 * @param artId
+	 * @param type
+	 * @param uid
+	 * @returns {Promise<void>}
+	 */
 	static async dislike(artId, type, uid) {
 		const favor = await Favor.findOne({
 			where: {artId, type, uid}
@@ -68,6 +75,14 @@ class Favor extends Model {
 			// 对art实体中的favNums字段进行 +1 操作
 			return await art.decrement('favNums', {by: 1, transaction: t})
 		})
+	}
+
+
+	static async userLikeIt(artId, type, uid) {
+		const favor = await Favor.findOne({
+			where: {uid, artId, type}
+		})
+		return favor ? true : false
 	}
 }
 

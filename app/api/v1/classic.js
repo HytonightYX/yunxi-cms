@@ -3,6 +3,7 @@ const router = new Router({prefix: '/v1/classic'})
 const {Auth} = require('../../../middlewares/auth')
 const {Flow} = require('../../models/flow')
 const {Art} = require('../../models/art')
+const {Favor} = require('../../models/favor')
 
 /**
  * 测试接口
@@ -24,11 +25,13 @@ router.get('/latest', new Auth(7).m, async (ctx, next) => {
 		]
 	})
 	const art = await Art.getData(flow.artId, flow.type)
+	const userLikeIt = await Favor.userLikeIt(flow.artId, flow.type, ctx.auth.uid)
 	// 序列化 对象=>json,如下直接修改属性非常不好
 	// art.dataValues.index = flow.index
 
 	// 使用内置方法
 	art.setDataValue('index', flow.index)
+	art.setDataValue('likeStatus', userLikeIt)
 	ctx.body = art
 })
 
