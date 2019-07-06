@@ -16,3 +16,5 @@ Flow.init({
 	sequelize: db,
 	tableName: 'flow'
 })
+
+module.exports = {Flow}

@@ -3,3 +3,4 @@ logs/
 *.lock
 .idea/
 yarn-error.log
+sql/
