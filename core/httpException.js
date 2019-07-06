@@ -52,6 +52,24 @@ class Forbidden extends HttpException {
 	}
 }
 
+class LikeError extends HttpException {
+	constructor(message, errorCode) {
+		super()
+		this.message = message || '你已经点赞过了'
+		this.errorCode = errorCode || 60001
+		this.code = 400
+	}
+}
+
+class DislikeError extends HttpException {
+	constructor(message, errorCode) {
+		super()
+		this.message = message || '你已经取消点赞了'
+		this.errorCode = errorCode || 60002
+		this.code = 400
+	}
+}
+
 module.exports = {
 	HttpException,
 	ParameterException,
@@ -59,5 +77,7 @@ module.exports = {
 	NotFound,
 	AuthFailed,
 	Forbidden,
+	LikeError,
+	DislikeError,
 }
 
