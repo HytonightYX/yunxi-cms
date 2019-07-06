@@ -1,6 +1,5 @@
 const {db} = require('../../core/db')
 const {Sequelize, Model} = require('sequelize')
-const {LikeError, DislikeError} = require('../../core/httpException')
 const {Art} = require('../models/art')
 
 
@@ -20,8 +19,6 @@ class Favor extends Model {
 	 * @returns {Promise<void>}
 	 */
 	static async like(artId, type, uid) {
-
-
 		const favor = await Favor.findOne({
 			where: {artId, type, uid}
 		})
@@ -31,7 +28,9 @@ class Favor extends Model {
 			throw new global.errs.LikeError()
 		}
 
+		// return db.transaction
 		db.transaction(async t => {
+			// 添加记录
 			await Favor.create({
 				artId, type, uid
 			}, {
@@ -41,16 +40,34 @@ class Favor extends Model {
 			const art = await Art.getData(artId, type)
 
 			// 对art实体中的favNums字段进行 +1 操作
-			await art.increment('favNums', {by: 1, transaction: t})
+			return await art.increment('favNums', {by: 1, transaction: t})
 		})
-		// 添加记录
-
-
-		// 修改classic中favNums + 1
-
 	}
-	static async dislike(artId, type, uid) {
 
+	static async dislike(artId, type, uid) {
+		const favor = await Favor.findOne({
+			where: {artId, type, uid}
+		})
+
+		// 当前用户还没点过赞,自然不能取消点赞
+		if (!favor) {
+			throw new global.errs.DislikeError()
+		}
+
+		// return db.transaction
+		db.transaction(async t => {
+			// 添加记录
+			await favor.destroy({
+				// true 硬删除/false 软删除
+				force: true,
+				transaction: t,
+			})
+
+			const art = await Art.getData(artId, type)
+
+			// 对art实体中的favNums字段进行 +1 操作
+			return await art.decrement('favNums', {by: 1, transaction: t})
+		})
 	}
 }
 
@@ -65,3 +82,7 @@ Favor.init({
 	sequelize: db,
 	tableName: 'favor'
 })
+
+module.exports = {
+	Favor
+}
