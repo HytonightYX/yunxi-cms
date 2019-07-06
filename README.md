@@ -13,4 +13,5 @@
 
 
 - uid 号码放在auth中传递,禁止让客户端作为参数传递(篡改).例如用户A篡改uid后获取的token,可以套出数据库中所有其他用户的数据
-- `Internal Server Error`多半是没加await
+- 报`Internal Server Error`错误,多半是没加await
+- Sequelize的一个bug,查询后对数据修改,必须设置`useScope=false`

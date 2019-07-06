@@ -37,7 +37,7 @@ class Favor extends Model {
 				transaction: t
 			})
 
-			const art = await Art.getData(artId, type)
+			const art = await Art.getData(artId, type, false)
 
 			// 对art实体中的favNums字段进行 +1 操作
 			return await art.increment('favNums', {by: 1, transaction: t})
@@ -70,7 +70,7 @@ class Favor extends Model {
 				transaction: t,
 			})
 
-			const art = await Art.getData(artId, type)
+			const art = await Art.getData(artId, type, false)
 
 			// 对art实体中的favNums字段进行 +1 操作
 			return await art.decrement('favNums', {by: 1, transaction: t})

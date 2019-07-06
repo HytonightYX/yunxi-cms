@@ -1,6 +1,8 @@
 node_modules/
 logs/
-*.lock
 .idea/
-yarn-error.log
 sql/
+
+*.lock
+package-lock.json
+yarn-error.log

@@ -13,6 +13,13 @@ const db = new Sequelize(dbName, user, pwd, {
 			// updatedAt: 'updated_at',
 			// deletedAt: 'deleted_at',
 			underscored: true,          //  自动将驼峰转下划线
+			scopes: {
+				noTS: {
+					attributes: {
+						exclude: ['updatedAt', 'deletedAt', 'createdAt']
+					}
+				}
+			}
 		}
 })
 
