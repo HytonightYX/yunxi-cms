@@ -54,6 +54,20 @@ class Auth {
 			await next()
 		}
 	}
+
+	/**
+	 * 验证令牌
+	 * @param token 令牌
+	 * @returns 令牌是否有效(过期)
+	 */
+	static verifyToken(token) {
+		try {
+			jwt.verify(token, global.config.security.secretKey)
+			return true
+		} catch (e) {
+			return false
+		}
+	}
 }
 
 module.exports = {Auth}
