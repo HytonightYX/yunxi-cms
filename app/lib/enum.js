@@ -41,5 +41,6 @@ function isThisType(val) {
 }
 
 module.exports = {
-	LoginType
+	LoginType,
+	ArtType,
 }

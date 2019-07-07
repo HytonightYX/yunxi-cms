@@ -1,5 +1,5 @@
 const {db} = require('../../core/db')
-const {Sequelize, Model} = require('sequelize')
+const {Sequelize, Model, Op} = require('sequelize')
 const {Art} = require('../models/art')
 
 
@@ -77,12 +77,40 @@ class Favor extends Model {
 		})
 	}
 
-
+	/**
+	 * 用户是否喜欢该期刊
+	 * @param artId
+	 * @param type
+	 * @param uid
+	 * @returns {Promise<boolean>}
+	 */
 	static async userLikeIt(artId, type, uid) {
 		const favor = await Favor.findOne({
 			where: {uid, artId, type}
 		})
 		return favor ? true : false
+	}
+
+
+	static async getMyClassicFavors(uid) {
+		const arts = await Favor.findAll({
+			where: {
+				uid: uid,
+				type: {
+					// 排除book类型
+					[Op.not]: 400
+				}
+			}
+		})
+
+		if (!arts) {
+			throw new global.err.NotFound()
+		}
+
+		// 禁止循环查询数据库
+
+		
+
 	}
 }
 
