@@ -4,7 +4,12 @@ const {Auth} = require('../../../middlewares/auth')
 const {Flow} = require('../../models/flow')
 const {Art} = require('../../models/art')
 const {Favor} = require('../../models/favor')
-const {PositiveIntegerValidator} = require('../../validators/validator')
+const {
+	PositiveIntegerValidator,
+	ClassicValidator
+} = require('../../validators/validator')
+
+//TODO: 三个接口代码重复性过高,可以重构
 
 /**
  * 测试接口
@@ -83,6 +88,31 @@ router.get('/:index/previous', new Auth().m, async ctx => {
 	art.setDataValue('index', flow.index)
 	art.setDataValue('likeStatus', userLikeIt)
 	ctx.body = art
+})
+
+/**
+ * 获取点赞信息
+ * @params: {type: 点赞类型, id: 点赞对象的id号}
+ * @return: {点赞数量, artId, 用户是否喜欢}
+ */
+router.get('/:type/:id/favor', new Auth().m, async ctx => {
+	const v = await new ClassicValidator().validate(ctx)
+	const id = v.get('path.id')
+	const type = parseInt(v.get('path.type'))
+
+	const art = await Art.getData(id, type)
+
+	if (!art) {
+		throw new global.errs.NotFound()
+	}
+
+	const userLikeIt = await Favor.userLikeIt(id, type, ctx.auth.uid)
+
+	ctx.body = {
+		artId: id,
+		favNums: art.favNums,
+		likeStatus: userLikeIt
+	}
 })
 
 module.exports = router

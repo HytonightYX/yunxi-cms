@@ -101,15 +101,27 @@ class LikeValidator extends PositiveIntegerValidator {
 }
 
 /**
- * type 检查
+ * Classic校验器
+ * 校验 type 和 id, 和 LikeValidator 一样,直接继承
+ */
+class ClassicValidator extends LikeValidator {
+	constructor() {
+		super()
+		this.validateType = checkType
+	}
+}
+
+/**
+ * art type 检查
  * @param vals
  */
 function checkType(vals) {
-	if (!vals.body.type) {
+	const type = parseInt(vals.body.type || vals.path.type)
+	if (!type) {
 		throw new Error('缺少type参数')
 	}
 
-	if (!LoginType.isThisType(vals.body.type)) {
+	if (!LoginType.isThisType(type)) {
 		throw new Error('type参数不合法')
 	}
 }
@@ -120,4 +132,5 @@ module.exports = {
 	TokenValidator,
 	NotEmptyValidator,
 	LikeValidator,
+	ClassicValidator,
 }
