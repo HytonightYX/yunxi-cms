@@ -108,9 +108,7 @@ class Favor extends Model {
 		}
 
 		// 禁止循环查询数据库
-
-		
-
+		return await Art.getList(arts)
 	}
 }
 
