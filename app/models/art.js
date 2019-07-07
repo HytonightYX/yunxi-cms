@@ -56,7 +56,7 @@ class Art {
 
 			if (ids.length > 0) {
 				key = parseInt(key)
-				res.push(Art._getListByType(ids, key))
+				res.push(await Art._getListByType(ids, key))
 			}
 		}
 
@@ -66,7 +66,7 @@ class Art {
 
 	static async _getListByType(ids, type) {
 		let arts = []
-		const scope = 'noTS'
+		const scope = null
 		const condition = {
 			where: {
 				id: {
@@ -78,13 +78,14 @@ class Art {
 		switch (type) {
 			case 100:
 				// art = await Movie.scope('noTS').findOne(condition)
-				arts.push(await Movie.scope(scope).findOne(condition))
+				arts = await Movie.findAll(condition)
+				console.log(arts)
 				break
 			case 200:
-				arts.push(await Music.scope(scope).findOne(condition))
+				arts = await Music.scope(scope).findAll(condition)
 				break
 			case 300:
-				arts.push(await Sentence.scope(scope).findOne(condition))
+				arts = await Sentence.scope(scope).findAll(condition)
 				break
 			case 400:
 				//TODO: Book的相关逻辑
