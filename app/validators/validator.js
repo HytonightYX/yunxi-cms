@@ -112,6 +112,31 @@ class ClassicValidator extends LikeValidator {
 }
 
 /**
+ * 书籍搜索参数校验
+ */
+class SearchValidator extends LinValidator {
+	constructor() {
+		super()
+		// keyword 要查询的关键字
+		this.q = [
+			new Rule('isLength', '搜索关键字q不能为空', {min: 1, max: 16}),
+		]
+		// 分页:
+			// 老版分页需要pageNum/perPage两个参数
+			// 现在一般用start/count两个参数
+		this.start = [
+			new Rule('isInt', '参数不合法', {min: 0, max: 60000}),
+			new Rule('isOptional', '', 0),    // 不传start的话,默认给个0
+		]
+
+		this.count = [
+			new Rule('isInt', '参数不合法', {min: 1, max: 20}),
+			new Rule('isOptional', '', 20),    // 不传count的话,默认给个20
+		]
+	}
+}
+
+/**
  * loginType 检查
  * @param vals
  */
@@ -148,4 +173,5 @@ module.exports = {
 	NotEmptyValidator,
 	LikeValidator,
 	ClassicValidator,
+	SearchValidator,
 }
