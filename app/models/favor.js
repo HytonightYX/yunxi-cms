@@ -91,7 +91,6 @@ class Favor extends Model {
 		return favor ? true : false
 	}
 
-
 	static async getMyClassicFavors(uid) {
 		const arts = await Favor.findAll({
 			where: {
@@ -109,6 +108,34 @@ class Favor extends Model {
 
 		// 禁止循环查询数据库
 		return await Art.getList(arts)
+	}
+
+	/**
+	 * 获取用户是否喜欢某书籍
+	 * @param uid
+	 * @param bookId
+	 * @returns {Promise<{likeStatus: number, favNums: number}>}
+	 */
+	static async getBookFavor(uid, bookId){
+		const favorNums = await Favor.count({
+			where: {
+				artId: bookId,
+				type: 400
+			}
+		})
+
+		const myFavor = await Favor.findOne({
+			where:{
+				artId: bookId,
+				uid: uid,
+				type: 400
+			}
+		})
+
+		return {
+			favNums:favorNums,
+			likeStatus:myFavor?1:0
+		}
 	}
 }
 
