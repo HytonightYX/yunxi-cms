@@ -117,11 +117,30 @@ router.get('/:type/:id/favor', new Auth().m, async ctx => {
 
 /**
  * 查询用户喜欢的所有期刊的列表
- * @params: uid 用户id
  */
 router.get('/favor', new Auth().m, async ctx => {
 	const uid = ctx.auth.uid
 	ctx.body = await Favor.getMyClassicFavors(uid)
+})
+
+/**
+ * 获取期刊详情
+ */
+router.get('/:type/:id', new Auth().m, async ctx => {
+	const v = await new ClassicValidator().validate(ctx)
+	const id = v.get('path.id')
+	const type = parseInt(v.get('path.type'))
+
+	const art = await Art.getData(id, type)
+
+	if (!art) {
+		throw new global.errs.NotFound()
+	}
+
+	const userLikeIt = await Favor.userLikeIt(id, type, ctx.auth.uid)
+
+	art.setDataValue('likeStatus', userLikeIt)
+	ctx.body = art
 })
 
 module.exports = router
