@@ -79,7 +79,6 @@ class Art {
 			case 100:
 				// art = await Movie.scope('noTS').findOne(condition)
 				arts = await Movie.findAll(condition)
-				console.log(arts)
 				break
 			case 200:
 				arts = await Music.scope(scope).findAll(condition)

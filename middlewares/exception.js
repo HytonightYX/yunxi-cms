@@ -19,7 +19,6 @@ const catchError = async (ctx, next) => {
 				request: `${ctx.method} ${ctx.path}`
 			}
 			ctx.status = error.code
-			console.log(ctx)
 		} else {
 			ctx.body = {
 				message: '捕获到未知异常:\n' + error.stack,
