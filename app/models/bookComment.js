@@ -32,6 +32,18 @@ class Comment extends Model {
 			where: {bookId: bookId}
 		})
 	}
+
+	/**
+	 * 自定义JSON序列化
+	 * @returns {{content: any, nums: any}}
+	 */
+	// toJSON() {
+	// 	// const all = this.dataValues;
+	// 	return {
+	// 		content: this.getDataValue('content'),
+	// 		nums: this.getDataValue('nums')
+	// 	}
+	// }
 }
 
 Comment.init({

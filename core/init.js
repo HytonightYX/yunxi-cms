@@ -30,8 +30,6 @@ class InitManager {
 		global.errs = require('./httpException')
 	}
 
-	// static loadHttpException
-
 	static loadConfig(path='') {
 		const configPath = path || process.cwd() + '/config/config.js'
 		global.config = require(configPath)

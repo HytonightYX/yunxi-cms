@@ -58,7 +58,7 @@ class Auth {
 	/**
 	 * 验证令牌
 	 * @param token 令牌
-	 * @returns 令牌是否有效(过期)
+	 * @returns boolean 令牌是否有效
 	 */
 	static verifyToken(token) {
 		try {
