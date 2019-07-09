@@ -79,5 +79,24 @@ router.get('/:bookId/short-comment', new Auth().m, async ctx => {
 	ctx.body = await Comment.getComments(v.get('path.bookId'))
 })
 
+/**
+ * 模拟热搜
+ * 部分算法,部分人为
+ */
+router.get('/hot-keyword', async ctx => {
+	ctx.body = {
+		'hot': [
+			'Python',
+			'哈利·波特',
+			'村上春树',
+			'东野圭吾',
+			'白夜行',
+			'韩寒',
+			'金庸',
+			'王小波'
+		]
+	}
+})
+
 module.exports = router
 
