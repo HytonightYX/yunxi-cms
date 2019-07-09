@@ -40,6 +40,12 @@ Model.prototype.toJSON = function() {
 	unset(data, 'createdAt')
 	unset(data, 'deletedAt')
 
+	for (key in data) {
+		if (key === 'image') {
+			data[key] = global.config.host + data[key]
+		}
+	}
+
 	// 待删除字段
 	if (isArray(this.exclude)) {
 		this.exclude.forEach(val => {
