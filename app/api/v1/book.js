@@ -21,10 +21,7 @@ router.get('/test', (ctx, next) => {
  * 公开
  */
 router.get('/hot-list', async (ctx, next) => {
-	const favors = await HotBook.getAll()
-	ctx.body = {
-		books: favors
-	}
+	ctx.body = await HotBook.getAll()
 })
 
 /**
@@ -76,7 +73,12 @@ router.post('/add/short-comment', new Auth().m, async ctx => {
  */
 router.get('/:bookId/short-comment', new Auth().m, async ctx => {
 	const v = await new PositiveIntegerValidator().validate(ctx, {id: 'bookId'})
-	ctx.body = await Comment.getComments(v.get('path.bookId'))
+	const bookId = v.get('path.bookId')
+	const comments = await Comment.getComments(v.get('path.bookId'))
+	ctx.body = {
+		comments: comments,
+		book_id: bookId
+	}
 })
 
 /**

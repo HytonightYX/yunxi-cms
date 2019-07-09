@@ -22,7 +22,14 @@ class Art {
 				art = await Sentence.scope(scope).findOne(condition)
 				break
 			case 400:
-				//TODO: Book的相关逻辑
+				// 局部导入,避免循环导入
+				const {Book} = require('./book')
+				art = await Book.scope(scope).findOne(condition)
+				if (!art) {
+					art = await Book.create({
+						id: artId,
+					})
+				}
 				break
 			default:
 				break

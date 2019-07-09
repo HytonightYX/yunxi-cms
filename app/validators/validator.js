@@ -96,7 +96,7 @@ class NotEmptyValidator extends LinValidator {
 class LikeValidator extends PositiveIntegerValidator {
 	constructor() {
 		super()
-		this.validateType = checkLoginType
+		this.validateType = checkArtType
 	}
 }
 
