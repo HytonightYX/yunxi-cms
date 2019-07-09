@@ -3,8 +3,10 @@ const router = new Router({prefix: '/v1/book'})
 const {HotBook} = require('../../models/hotBook')
 const {Book} = require('../../models/book')
 const {Favor} = require('../../models/favor')
-const {PositiveIntegerValidator, SearchValidator} = require('../../validators/validator')
+const {PositiveIntegerValidator, SearchValidator, AddShortCommentValidator} = require('../../validators/validator')
 const {Auth} = require('../../../middlewares/auth')
+const {Comment} = require('../../models/bookComment')
+const {success} = require('../../lib/helper')
 
 /**
  * book测试接口
@@ -58,6 +60,17 @@ router.get('/:bookId/favor', new Auth().m, async ctx => {
 	const v = await new PositiveIntegerValidator().validate(ctx, {id: 'bookId'})
 	const favor = await Favor.getBookFavor(ctx.auth.uid, v.get('path.bookId'))
 	ctx.body = favor
+})
+
+/**
+ * 增加短评接口
+ */
+router.post('/add/short-comment', new Auth().m, async ctx => {
+	const v = await new AddShortCommentValidator().validate(ctx, {id: 'bookId'})
+
+	await Comment.addComment(v.get('body.bookId'), v.get('body.content'))
+
+	success()
 })
 
 module.exports = router
