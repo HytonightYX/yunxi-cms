@@ -67,10 +67,16 @@ router.get('/:bookId/favor', new Auth().m, async ctx => {
  */
 router.post('/add/short-comment', new Auth().m, async ctx => {
 	const v = await new AddShortCommentValidator().validate(ctx, {id: 'bookId'})
-
 	await Comment.addComment(v.get('body.bookId'), v.get('body.content'))
-
 	success()
+})
+
+/**
+ * 获取书籍所有短评
+ */
+router.get('/:bookId/short-comment', new Auth().m, async ctx => {
+	const v = await new PositiveIntegerValidator().validate(ctx, {id: 'bookId'})
+	ctx.body = await Comment.getComments(v.get('path.bookId'))
 })
 
 module.exports = router

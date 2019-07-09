@@ -26,6 +26,12 @@ class Comment extends Model {
 			return await comment.increment('nums', {by: 1})
 		}
 	}
+
+	static async getComments(bookId) {
+		return await Comment.findAll({
+			where: {bookId: bookId}
+		})
+	}
 }
 
 Comment.init({
